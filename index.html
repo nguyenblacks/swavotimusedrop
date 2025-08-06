@@ -634,6 +634,9 @@
             }
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 </head>
 <body>
     <!-- Sidebar -->
@@ -708,7 +711,8 @@
                     <span class="search-icon">🔍</span>
                     <input type="text" placeholder="Search projects...">
                 </div>
-                <button class="btn btn-primary" id="open-deploy-modal">New Project</button>
+                <button class="btn btn-primary" id="login-btn">Login with Google</button>
+                <button class="btn btn-primary" id="logout-btn" style="display: none;">Logout</button>
             </div>
         </div>
         
@@ -1005,6 +1009,20 @@
     </div>
 
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAoCv6q8-GmIlDCE_KawiC1Ko4NaS9WJzs",
+            authDomain: "muse-pkwfi.firebaseapp.com",
+            projectId: "muse-pkwfi",
+            storageBucket: "muse-pkwfi.firebasestorage.app",
+            messagingSenderId: "962437945309",
+            appId: "1:962437945309:web:be86d9b7400a444e778834"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const storage = firebase.storage();
+
         // Mobile Menu Toggle
         document.querySelector('.mobile-menu-btn')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('show');
@@ -1099,6 +1117,105 @@
             }
         }
         
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in.
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                document.querySelector('.user-name').textContent = user.displayName;
+                document.querySelector('.user-email').textContent = user.email;
+                const userAvatar = document.querySelector('.user-avatar');
+                userAvatar.textContent = '';
+                const avatarImg = document.createElement('img');
+                avatarImg.src = user.photoURL;
+                avatarImg.style.width = '100%';
+                avatarImg.style.height = '100%';
+                avatarImg.style.borderRadius = '50%';
+                userAvatar.appendChild(avatarImg);
+
+            } else {
+                // No user is signed in.
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                document.querySelector('.user-name').textContent = 'John Doe';
+                document.querySelector('.user-email').textContent = 'john@example.com';
+                const userAvatar = document.querySelector('.user-avatar');
+                userAvatar.textContent = 'JD';
+
+            }
+        });
+
+        loginBtn.addEventListener('click', () => {
+            auth.signInWithPopup(provider).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                const credential = error.credential;
+                // ...
+            });
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut();
+        });
+
+        const dropZone = document.querySelector('.section[style="flex: 1;"]');
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'var(--primary-light)';
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'white';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'white';
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                const user = auth.currentUser;
+                if (user) {
+                    const storageRef = storage.ref();
+                    const fileRef = storageRef.child(`uploads/${user.uid}/${file.name}`);
+                    const uploadTask = fileRef.put(file);
+
+                    uploadTask.on('state_changed',
+                        (snapshot) => {
+                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload is ' + progress + '% done');
+                            const progressBar = document.createElement('progress');
+                            progressBar.value = progress;
+                            progressBar.max = 100;
+                            dropZone.appendChild(progressBar);
+                        },
+                        (error) => {
+                            // Handle unsuccessful uploads
+                        },
+                        () => {
+                            // Handle successful uploads on complete
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                console.log('File available at', downloadURL);
+                            });
+                        }
+                    );
+                } else {
+                    alert('Please log in to upload files.');
+                }
+            }
+        });
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             simulateDeployment();
