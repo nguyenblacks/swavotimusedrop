@@ -648,43 +648,43 @@
         
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link active" data-page="dashboard-page">
                     <span class="nav-icon">📊</span>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" data-page="projects-page">
                     <span class="nav-icon">📦</span>
                     <span>Projects</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" data-page="deployments-page">
                     <span class="nav-icon">🔄</span>
                     <span>Deployments</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" data-page="creativetools-page">
                     <span class="nav-icon">🎨</span>
                     <span>Creative Tools</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" data-page="analytics-page">
                     <span class="nav-icon">📈</span>
                     <span>Analytics</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" data-page="integrations-page">
                     <span class="nav-icon">🔌</span>
                     <span>Integrations</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" data-page="settings-page">
                     <span class="nav-icon">⚙️</span>
                     <span>Settings</span>
                 </a>
@@ -704,219 +704,129 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <div class="header">
-            <h1 class="page-title">Dashboard</h1>
-            <div class="header-actions">
-                <div class="search-bar">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Search projects...">
-                </div>
-                <button class="btn btn-primary" id="login-btn">Login with Google</button>
-                <button class="btn btn-primary" id="logout-btn" style="display: none;">Logout</button>
-            </div>
-        </div>
-        
-        <!-- Stats Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-title">Active Projects</div>
-                <div class="stat-value">12</div>
-                <div class="stat-change up">
-                    <span>↑ 2 from last month</span>
+        <div id="dashboard-page" class="page">
+            <div class="header">
+                <h1 class="page-title">Dashboard</h1>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search projects...">
+                    </div>
+                    <button class="btn btn-primary" id="login-btn">Login with Google</button>
+                    <button class="btn btn-primary" id="logout-btn" style="display: none;">Logout</button>
                 </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-title">Monthly Views</div>
-                <div class="stat-value">24.5K</div>
-                <div class="stat-change up">
-                    <span>↑ 12% from last month</span>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">No stats to display</div>
+                    <div class="stat-value">-</div>
                 </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">Bandwidth Used</div>
-                <div class="stat-value">8.2 GB</div>
-                <div class="stat-change down">
-                    <span>↓ 1.5GB from last month</span>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-title">Current Plan</div>
-                <div class="stat-value">Creator</div>
-                <div class="stat-change">
-                    <span>Upgrade available</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Recent Projects -->
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">Recent Projects</h2>
-                <a href="#" class="btn btn-secondary btn-sm">View All</a>
             </div>
             
-            <table class="projects-table">
-                <thead>
-                    <tr>
-                        <th>Project</th>
-                        <th>Status</th>
-                        <th>Last Updated</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="project-name">
-                                <div class="project-icon">P1</div>
-                                <div class="project-info">
-                                    <h4>Interactive Portfolio</h4>
-                                    <p>portfolio.johndoe.art</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge badge-success">Live</span></td>
-                        <td>2 hours ago</td>
-                        <td>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm">Manage</button>
-                                <button class="btn btn-primary btn-sm">Visit</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="project-name">
-                                <div class="project-icon">P2</div>
-                                <div class="project-info">
-                                    <h4>Audio Visualizer</h4>
-                                    <p>visualizer.johndoe.art</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge badge-warning">Building</span></td>
-                        <td>15 minutes ago</td>
-                        <td>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm">Manage</button>
-                                <button class="btn btn-primary btn-sm" disabled>Visit</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="project-name">
-                                <div class="project-icon">P3</div>
-                                <div class="project-info">
-                                    <h4>Generative Art Gallery</h4>
-                                    <p>generative.johndoe.art</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge badge-success">Live</span></td>
-                        <td>1 day ago</td>
-                        <td>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm">Manage</button>
-                                <button class="btn btn-primary btn-sm">Visit</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="project-name">
-                                <div class="project-icon">P4</div>
-                                <div class="project-info">
-                                    <h4>WebGL Experiment</h4>
-                                    <p>webgl.johndoe.art</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge badge-error">Failed</span></td>
-                        <td>3 days ago</td>
-                        <td>
-                            <div class="project-actions">
-                                <button class="btn btn-secondary btn-sm">Manage</button>
-                                <button class="btn btn-primary btn-sm" disabled>Visit</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- Recent Activity & Quick Deploy -->
-        <div class="form-row" style="gap: 30px; margin-bottom: 30px;">
-            <div class="section" style="flex: 2;">
+            <!-- Recent Projects -->
+            <div class="section">
                 <div class="section-header">
-                    <h2 class="section-title">Recent Activity</h2>
+                    <h2 class="section-title">Recent Projects</h2>
                     <a href="#" class="btn btn-secondary btn-sm">View All</a>
                 </div>
                 
-                <ul class="activity-list">
-                    <li class="activity-item">
-                        <div class="activity-icon">🚀</div>
-                        <div class="activity-content">
-                            <div class="activity-message">
-                                Deployed new version of <strong>Interactive Portfolio</strong> (v1.2.0)
-                            </div>
-                            <div class="activity-time">15 minutes ago</div>
-                        </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon">🎨</div>
-                        <div class="activity-content">
-                            <div class="activity-message">
-                                Used <strong>Color Muse</strong> tool to update palette for <strong>Generative Art Gallery</strong>
-                            </div>
-                            <div class="activity-time">2 hours ago</div>
-                        </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon">⚠️</div>
-                        <div class="activity-content">
-                            <div class="activity-message">
-                                Build failed for <strong>WebGL Experiment</strong> due to memory limit
-                            </div>
-                            <div class="activity-time">1 day ago</div>
-                        </div>
-                    </li>
-                    <li class="activity-item">
-                        <div class="activity-icon">📈</div>
-                        <div class="activity-content">
-                            <div class="activity-message">
-                                <strong>Audio Visualizer</strong> received 1,245 views yesterday
-                            </div>
-                            <div class="activity-time">2 days ago</div>
-                        </div>
-                    </li>
-                </ul>
+                <table class="projects-table">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" style="text-align: center; padding: 40px;">No projects found.</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
-            <div class="section" style="flex: 1;">
-                <div class="section-header">
-                    <h2 class="section-title">Quick Deploy</h2>
+            <!-- Recent Activity & Quick Deploy -->
+            <div class="form-row" style="gap: 30px; margin-bottom: 30px;">
+                <div class="section" style="flex: 2;">
+                    <div class="section-header">
+                        <h2 class="section-title">Recent Activity</h2>
+                        <a href="#" class="btn btn-secondary btn-sm">View All</a>
+                    </div>
+
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-content" style="text-align: center; width: 100%;">
+                                No recent activity.
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 
-                <div style="text-align: center; padding: 20px 0;">
-                    <div style="margin-bottom: 20px;">
-                        <div style="font-size: 3rem; margin-bottom: 10px;">🖱️</div>
-                        <h3 style="margin-bottom: 10px;">Drag & Drop</h3>
-                        <p style="color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem;">
-                            Upload your project files directly
-                        </p>
-                        <div style="border: 2px dashed #ddd; border-radius: 5px; padding: 30px; margin-bottom: 20px;">
-                            <p>Drop files here</p>
-                            <p style="color: var(--text-light); font-size: 0.8rem;">or</p>
-                            <button class="btn btn-secondary">Browse Files</button>
-                        </div>
+                <div class="section" style="flex: 1;">
+                    <div class="section-header">
+                        <h2 class="section-title">Quick Deploy</h2>
                     </div>
                     
-                    <div style="text-align: center;">
-                        <p style="color: var(--text-light); margin-bottom: 15px; font-size: 0.9rem;">Prefer to connect a Git repository?</p>
-                        <button class="btn btn-primary" id="open-deploy-modal-full">Advanced Deploy</button>
+                    <div style="text-align: center; padding: 20px 0;">
+                        <div style="margin-bottom: 20px;">
+                            <div style="font-size: 3rem; margin-bottom: 10px;">🖱️</div>
+                            <h3 style="margin-bottom: 10px;">Drag & Drop</h3>
+                            <p style="color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem;">
+                                Upload your project files directly
+                            </p>
+                            <div style="border: 2px dashed #ddd; border-radius: 5px; padding: 30px; margin-bottom: 20px;">
+                                <p>Drop files here</p>
+                                <p style="color: var(--text-light); font-size: 0.8rem;">or</p>
+                                <button class="btn btn-secondary">Browse Files</button>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <p style="color: var(--text-light); margin-bottom: 15px; font-size: 0.9rem;">Prefer to connect a Git repository?</p>
+                            <button class="btn btn-primary" id="open-deploy-modal-full">Advanced Deploy</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="projects-page" class="page" style="display: none;">
+            <div class="header">
+                <h1 class="page-title">Projects</h1>
+            </div>
+        </div>
+
+        <div id="deployments-page" class="page" style="display: none;">
+            <div class="header">
+                <h1 class="page-title">Deployments</h1>
+            </div>
+        </div>
+
+        <div id="creativetools-page" class="page" style="display: none;">
+            <div class="header">
+                <h1 class="page-title">Creative Tools</h1>
+            </div>
+        </div>
+
+        <div id="analytics-page" class="page" style="display: none;">
+            <div class="header">
+                <h1 class="page-title">Analytics</h1>
+            </div>
+        </div>
+
+        <div id="integrations-page" class="page" style="display: none;">
+            <div class="header">
+                <h1 class="page-title">Integrations</h1>
+            </div>
+        </div>
+
+        <div id="settings-page" class="page" style="display: none;">
+            <div class="header">
+                <h1 class="page-title">Settings</h1>
             </div>
         </div>
     </main>
@@ -1219,6 +1129,31 @@
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             simulateDeployment();
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const pageId = this.getAttribute('data-page');
+
+                    pages.forEach(page => {
+                        if (page.id === pageId) {
+                            page.style.display = 'block';
+                        } else {
+                            page.style.display = 'none';
+                        }
+                    });
+
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+
+                    this.classList.add('active');
+                });
+            });
         });
     </script>
 </body>
