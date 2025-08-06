@@ -1078,22 +1078,24 @@
             auth.signOut();
         });
 
-        const browseBtn = document.getElementById('browse-files-btn');
-        const fileInput = document.getElementById('file-input');
-        const dropZone = document.getElementById('drop-zone-quick-deploy');
+        document.addEventListener('DOMContentLoaded', function() {
+            const browseBtn = document.getElementById('browse-files-btn');
+            const fileInput = document.getElementById('file-input');
+            const dropZone = document.getElementById('drop-zone-quick-deploy');
 
-        browseBtn.addEventListener('click', () => {
-            fileInput.click();
-        });
+            browseBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
 
-        fileInput.addEventListener('change', (e) => {
-            const files = e.target.files;
-            handleFiles(files);
-        });
+            fileInput.addEventListener('change', (e) => {
+                const files = e.target.files;
+                handleFiles(files);
+            });
 
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.style.backgroundColor = 'var(--primary-light)';
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.style.backgroundColor = 'var(--primary-light)';
+            });
         });
 
         dropZone.addEventListener('dragleave', (e) => {
