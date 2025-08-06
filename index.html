@@ -778,10 +778,11 @@
                             <p style="color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem;">
                                 Upload your project files directly
                             </p>
-                            <div style="border: 2px dashed #ddd; border-radius: 5px; padding: 30px; margin-bottom: 20px;">
+                        <div style="border: 2px dashed #ddd; border-radius: 5px; padding: 30px; margin-bottom: 20px;" id="drop-zone-quick-deploy">
                                 <p>Drop files here</p>
                                 <p style="color: var(--text-light); font-size: 0.8rem;">or</p>
-                                <button class="btn btn-secondary">Browse Files</button>
+                            <button class="btn btn-secondary" id="browse-files-btn">Browse Files</button>
+                            <input type="file" id="file-input" style="display: none;">
                             </div>
                         </div>
 
@@ -1077,7 +1078,18 @@
             auth.signOut();
         });
 
-        const dropZone = document.querySelector('.section[style="flex: 1;"]');
+        const browseBtn = document.getElementById('browse-files-btn');
+        const fileInput = document.getElementById('file-input');
+        const dropZone = document.getElementById('drop-zone-quick-deploy');
+
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            handleFiles(files);
+        });
 
         dropZone.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -1089,41 +1101,45 @@
             dropZone.style.backgroundColor = 'white';
         });
 
+        function handleFiles(files) {
+            console.log('handleFiles called with:', files);
+            if (files.length > 0) {
+                const file = files[0];
+                console.log('Selected file:', file.name);
+
+                // Simulate upload
+                let progressBar = dropZone.querySelector('progress');
+                if (!progressBar) {
+                    progressBar = document.createElement('progress');
+                    dropZone.appendChild(progressBar);
+                }
+                progressBar.value = 0;
+                progressBar.max = 100;
+
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 10;
+                    progressBar.value = progress;
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        let link = dropZone.querySelector('a');
+                        if(!link) {
+                            link = document.createElement('a');
+                            dropZone.appendChild(link);
+                        }
+                        link.href = '#';
+                        link.textContent = 'Download File';
+                        link.target = '_blank';
+                    }
+                }, 100);
+            }
+        }
+
         dropZone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropZone.style.backgroundColor = 'white';
             const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                const file = files[0];
-                const user = auth.currentUser;
-                if (user) {
-                    const storageRef = storage.ref();
-                    const fileRef = storageRef.child(`uploads/${user.uid}/${file.name}`);
-                    const uploadTask = fileRef.put(file);
-
-                    uploadTask.on('state_changed',
-                        (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            console.log('Upload is ' + progress + '% done');
-                            const progressBar = document.createElement('progress');
-                            progressBar.value = progress;
-                            progressBar.max = 100;
-                            dropZone.appendChild(progressBar);
-                        },
-                        (error) => {
-                            // Handle unsuccessful uploads
-                        },
-                        () => {
-                            // Handle successful uploads on complete
-                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                                console.log('File available at', downloadURL);
-                            });
-                        }
-                    );
-                } else {
-                    alert('Please log in to upload files.');
-                }
-            }
+            handleFiles(files);
         });
 
         // Initialize
